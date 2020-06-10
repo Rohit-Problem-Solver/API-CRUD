@@ -1,0 +1,26 @@
+USE [MVC-ORM-CRUD]
+GO
+
+/****** Object:  Table [dbo].[Enrolment]    Script Date: 6/10/2020 5:25:46 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Enrolment](
+	[Enrolment_Id] [int] IDENTITY(1,1) NOT NULL,
+	[Employee_Id] [int] NULL,
+	[Enrolment_Desc] [nvarchar](200) NULL,
+	[Comments] [nvarchar](250) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Enrolment_Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Enrolment]  WITH CHECK ADD FOREIGN KEY([Employee_Id])
+REFERENCES [dbo].[tblEmployees] ([EmployeeId])
+GO
+

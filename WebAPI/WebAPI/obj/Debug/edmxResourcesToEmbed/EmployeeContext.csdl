@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Enrolment">
+    <Key>
+      <PropertyRef Name="Enrolment_Id" />
+    </Key>
+    <Property Name="Enrolment_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Employee_Id" Type="Int32" />
+    <Property Name="Enrolment_Desc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Comments" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblEmployee" Relationship="Self.FK__Enrolment__Emplo__3D5E1FD2" FromRole="Enrolment" ToRole="tblEmployees" />
+  </EntityType>
+  <EntityType Name="tblDepartment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblEmployees" Relationship="Self.FK__tblEmploy__Depar__25869641" FromRole="tblDepartment" ToRole="tblEmployees" />
+  </EntityType>
+  <EntityType Name="tblEmployee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <NavigationProperty Name="Enrolments" Relationship="Self.FK__Enrolment__Emplo__3D5E1FD2" FromRole="tblEmployees" ToRole="Enrolment" />
+    <NavigationProperty Name="tblDepartment" Relationship="Self.FK__tblEmploy__Depar__25869641" FromRole="tblEmployees" ToRole="tblDepartment" />
+  </EntityType>
+  <Association Name="FK__Enrolment__Emplo__3D5E1FD2">
+    <End Role="tblEmployees" Type="Self.tblEmployee" Multiplicity="0..1" />
+    <End Role="Enrolment" Type="Self.Enrolment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblEmployees">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="Enrolment">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblEmploy__Depar__25869641">
+    <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="0..1" />
+    <End Role="tblEmployees" Type="Self.tblEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDepartment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblEmployees">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EmployeeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Enrolments" EntityType="Self.Enrolment" />
+    <EntitySet Name="tblDepartments" EntityType="Self.tblDepartment" />
+    <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
+    <AssociationSet Name="FK__Enrolment__Emplo__3D5E1FD2" Association="Self.FK__Enrolment__Emplo__3D5E1FD2">
+      <End Role="tblEmployees" EntitySet="tblEmployees" />
+      <End Role="Enrolment" EntitySet="Enrolments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblEmploy__Depar__25869641" Association="Self.FK__tblEmploy__Depar__25869641">
+      <End Role="tblDepartment" EntitySet="tblDepartments" />
+      <End Role="tblEmployees" EntitySet="tblEmployees" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
